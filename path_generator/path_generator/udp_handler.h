@@ -8,6 +8,8 @@
 
 #pragma comment (lib, "Ws2_32.lib")
 
+// 2 float values = 4 bytes
+#define MSG_LENGTH 8
 
 class udp_handler
 {
@@ -24,7 +26,7 @@ public:
 
 	bool setup_comunication();
 
-	bool send(char *msg);
+	bool send(char msg[MSG_LENGTH]);
 
 
 	inline bool check_if_error(int check_value, int expected_err_value, int err_code, const char* err_msg);

@@ -9,6 +9,8 @@
 
 #pragma comment (lib, "Ws2_32.lib")
 
+// 2 float values = 4 bytes
+#define MSG_LENGTH 8
 
 class udp_handler
 {
@@ -19,16 +21,17 @@ private:
 	SOCKET sock;	//Socket
 	int port = 333;
 
-	char buff[1024];
+	char buff[MSG_LENGTH];
 	bool new_msg_available;
 
 public:
+
 	udp_handler();
 	~udp_handler();
 
 	bool setup_communication();
 	void recieve();
-	char* check_if_new_msg();
+	void check_if_new_msg(float *x, float *y);
 
 	//Checks if error occured and mange to handle it
 	inline bool check_if_error(int check_value, int expected_err_value, int err_code, const char* err_msg) {
@@ -39,5 +42,6 @@ public:
 		}
 		return false;
 	};
-};
 
+
+};

@@ -46,25 +46,29 @@ bool udp_handler::setup_communication()
 void udp_handler::recieve()
 {
 	int recsize;
-	char temp[1024];
-	recsize = recv(sock, temp, 1024, 0);
+	char temp[MSG_LENGTH];
+	recsize = recv(sock, temp, MSG_LENGTH, 0);
 	if (recsize < 0)
 		printf("Recieve error");
 
 	//TODO Mutex
-	snprintf(buff, 1024, "%s", temp); //copy temp to buff
+
+	//copy new message to buff
+	for(int i=0;i<MSG_LENGTH; i++)
+		buff[i] = temp[i];
+
 	new_msg_available = true;
 }
 
 
-char * udp_handler::check_if_new_msg()
+void udp_handler::check_if_new_msg(float *x, float *y)
 {
 	//TODO Mutex
 
-	if (new_msg_available) {
-		return buff;
+	if (new_msg_available) {		
+		*x = *(float*)buff;
+		*y = *(float*)(buff +4);	
+
 		new_msg_available = false;
 	}
-	else
-		return nullptr;
 }

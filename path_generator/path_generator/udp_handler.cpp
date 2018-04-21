@@ -33,9 +33,9 @@ bool udp_handler::setup_comunication()
 	return false;
 }
 
-bool udp_handler::send(char * msg)
+bool udp_handler::send(char msg[MSG_LENGTH])
 {
-	int bytes_send = sendto(sock, msg, sizeof msg, 0, (struct sockaddr*)&sa, sizeof(struct sockaddr_in));
+	int bytes_send = sendto(sock, msg, MSG_LENGTH, 0, (struct sockaddr*)&sa, sizeof(struct sockaddr_in));
 	if (bytes_send < 0)
 		printf("Error occured");
 	return false;
